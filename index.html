@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Night ✨</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    color:white;
+}
+
+.page{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    transition:all .5s ease;
+    background:#000;
+}
+
+.hidden{
+    opacity:0;
+    pointer-events:none;
+    transform:translateX(100%);
+}
+
+.page-title{
+    position:absolute;
+    top:15px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10;
+    background:rgba(0,0,0,.6);
+    padding:10px 18px;
+    border-radius:999px;
+    backdrop-filter:blur(10px);
+    font-weight:600;
+}
+
+.option{
+    position:relative;
+    height:33.333%;
+    width:100%;
+    cursor:pointer;
+    overflow:hidden;
+}
+
+.option img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .4s ease;
+}
+
+.option:hover img{
+    transform:scale(1.05);
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.35);
+    text-align:center;
+    padding:20px;
+}
+
+.overlay h2{
+    font-size:2rem;
+    text-shadow:0 3px 12px rgba(0,0,0,.8);
+}
+
+.selected{
+    outline:5px solid #1DB954;
+}
+
+.ticket{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:30px;
+}
+
+.ticket-box{
+    width:min(90%,450px);
+    background:#111;
+    border:2px dashed #1DB954;
+    border-radius:20px;
+    padding:30px;
+}
+
+.ticket-box h1{
+    margin-bottom:25px;
+}
+
+.ticket-box p{
+    margin:12px 0;
+    font-size:1.1rem;
+}
+
+.button-group{
+    margin-top:25px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+button{
+    border:none;
+    padding:15px;
+    border-radius:12px;
+    font-size:1rem;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.primary{
+    background:#1DB954;
+    color:white;
+}
+
+.secondary{
+    background:#333;
+    color:white;
+}
+
+#convincePage{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.convince-card{
+    width:min(90%,550px);
+    background:#111;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.convince-card img{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+}
+
+.convince-content{
+    padding:25px;
+}
+
+.convince-content h1{
+    margin-bottom:15px;
+}
+
+.convince-content p{
+    line-height:1.7;
+    margin-bottom:20px;
+}
+
+#acceptedPage{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+
+.success{
+    max-width:500px;
+}
+
+.success h1{
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.success p{
+    font-size:1.2rem;
+    line-height:1.6;
+}
+</style>
+
+</head>
+<body>
+
+<audio id="player"></audio>
+
+<!-- PAGE 1 -->
+
+<section id="concertPage" class="page">
+
+```
+<div class="page-title">Choose Our Concert 🎤</div>
+
+<div class="option concert-option"
+     data-name="Concert Option 1"
+     data-audio="assets/audio/mp3_1_1.mp3">
+
+    <img src="assets/images/Snow_Patrol_1_1.jpg" alt="">
+    <div class="overlay"><h2>Concert Option 1</h2></div>
+</div>
+
+<div class="option concert-option"
+     data-name="Concert Option 2"
+     data-audio="assets/audio/mp3_1_2.mp3">
+
+    <img src="assets/images/Europe_1_2.jpg" alt="">
+    <div class="overlay"><h2>Concert Option 2</h2></div>
+</div>
+
+<div class="option concert-option"
+     data-name="Concert Option 3"
+     data-audio="assets/audio/mp3_1_3.mp3">
+
+    <img src="assets/images/Cure_1_3.jpg" alt="">
+    <div class="overlay"><h2>Concert Option 3</h2></div>
+</div>
+```
+
+</section>
+
+<!-- PAGE 2 -->
+
+<section id="dinnerPage" class="page hidden">
+
+```
+<div class="page-title">Choose Dinner 🍽️</div>
+
+<div class="option dinner-option"
+     data-name="Dinner Option 1"
+     data-audio="assets/audio/mp3_2_1.mp3">
+
+    <img src="assets/images/img_2_1.jpg" alt="">
+    <div class="overlay"><h2>Dinner Option 1</h2></div>
+</div>
+
+<div class="option dinner-option"
+     data-name="Dinner Option 2"
+     data-audio="assets/audio/mp3_2_2.mp3">
+
+    <img src="assets/images/img_2_2.jpg" alt="">
+    <div class="overlay"><h2>Dinner Option 2</h2></div>
+</div>
+
+<div class="option dinner-option"
+     data-name="Dinner Option 3"
+     data-audio="assets/audio/mp3_2_3.mp3">
+
+    <img src="assets/images/img_2_3.jpg" alt="">
+    <div class="overlay"><h2>Dinner Option 3</h2></div>
+</div>
+```
+
+</section>
+
+<!-- PAGE 3 -->
+
+<section id="ticketPage" class="page hidden">
+
+```
+<div class="ticket">
+
+    <div class="ticket-box">
+
+        <h1>🎟️ OUR NIGHT</h1>
+
+        <p><strong>Concert:</strong></p>
+        <p id="concertChoice">-</p>
+
+        <br>
+
+        <p><strong>Dinner:</strong></p>
+        <p id="dinnerChoice">-</p>
+
+        <br>
+
+        <p><strong>Reserved Seat:</strong></p>
+        <p>Next To Me ❤️</p>
+
+        <div class="button-group">
+
+            <button class="primary" id="acceptBtn">
+                YES, I'M IN ❤️
+            </button>
+
+            <button class="secondary" id="convinceBtn">
+                I NEED MORE CONVINCING 🤔
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- PAGE 4 -->
+
+<section id="convincePage" class="page hidden">
+
+```
+<div class="convince-card">
+
+    <img src="assets/images/img_3_1.jpg" alt="">
+
+    <div class="convince-content">
+
+        <h1>🚨 Invalid Option Detected</h1>
+
+        <p>
+            After a careful review of your selection,
+            our system has concluded:
+        </p>
+
+        <p>
+            ✓ Concerts are fun<br>
+            ✓ Food is fun<br>
+            ✓ Spending time together is fun
+        </p>
+
+        <p>
+            Therefore, your previous choice appears
+            to be mathematically incorrect.
+        </p>
+
+        <button class="primary" id="fineBtn">
+            Fine... I'm In ❤️
+        </button>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- PAGE 5 -->
+
+<section id="acceptedPage" class="page hidden">
+
+```
+<div class="success">
+
+    <h1>✨ YES! ✨</h1>
+
+    <p>
+        Excellent choice.
+    </p>
+
+    <p>
+        Now all that's left is creating
+        a memorable night together ❤️
+    </p>
+
+</div>
+```
+
+</section>
+
+<script>
+
+const player = document.getElementById("player");
+
+let selectedConcert = "";
+let selectedDinner = "";
+
+function showPage(id){
+
+    document.querySelectorAll(".page").forEach(page=>{
+        page.classList.add("hidden");
+    });
+
+    document.getElementById(id).classList.remove("hidden");
+}
+
+function playAudio(path){
+
+    player.pause();
+
+    player.src = path;
+
+    player.play().catch(()=>{});
+}
+
+document.querySelectorAll(".concert-option").forEach(option=>{
+
+    option.addEventListener("click",()=>{
+
+        playAudio(option.dataset.audio);
+
+        selectedConcert = option.dataset.name;
+
+        document.getElementById("concertChoice").textContent =
+            selectedConcert;
+
+        setTimeout(()=>{
+            showPage("dinnerPage");
+        },500);
+    });
+
+});
+
+document.querySelectorAll(".dinner-option").forEach(option=>{
+
+    option.addEventListener("click",()=>{
+
+        playAudio(option.dataset.audio);
+
+        selectedDinner = option.dataset.name;
+
+        document.getElementById("dinnerChoice").textContent =
+            selectedDinner;
+
+        setTimeout(()=>{
+            showPage("ticketPage");
+        },500);
+    });
+
+});
+
+document
+.getElementById("acceptBtn")
+.addEventListener("click",()=>{
+
+    showPage("acceptedPage");
+
+});
+
+document
+.getElementById("convinceBtn")
+.addEventListener("click",()=>{
+
+    showPage("convincePage");
+
+});
+
+document
+.getElementById("fineBtn")
+.addEventListener("click",()=>{
+
+    showPage("acceptedPage");
+
+});
+
+</script>
+
+</body>
+</html>
