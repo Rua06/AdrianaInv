@@ -196,6 +196,29 @@ button{
     font-size:1.2rem;
     line-height:1.6;
 }
+.preview-btn {
+    margin-top: 10px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+    transition: all 0.2s ease;
+    z-index: 20; /* Ensures it sits above the image link */
+}
+
+.preview-btn:hover {
+    background: #1DB954; /* Spotify green on hover! */
+    border-color: #1DB954;
+    transform: scale(1.05);
+}
+
+/* Flex adjustment for overlay to hold both the title and the button vertically */
+.overlay {
+    flex-direction: column;
+}
 </style>
 
 </head>
@@ -206,35 +229,31 @@ button{
 <!-- PAGE 1 -->
 
 <section id="concertPage" class="page">
+    <div class="page-title">Choose Our Concert 🎤</div>
 
-```
-<div class="page-title">Choose Our Concert 🎤</div>
+    <div class="option concert-option" data-name="Concert Option 1" data-audio="assets/audio/openyoureyes_1_1.mp3">
+        <img src="assets/images/Snow_Patrol_1_1.jpg" alt="">
+        <div class="overlay">
+            <h2>Concert Option 1</h2>
+            <button class="preview-btn">▶ Preview Song</button>
+        </div>
+    </div>
 
-<div class="option concert-option"
-     data-name="Concert Option 1"
-     data-audio="assets/audio/openyoureyes_1_1.mp3">
+    <div class="option concert-option" data-name="Concert Option 2" data-audio="assets/audio/finalcountdown_1_2.mp3">
+        <img src="assets/images/Europe_1_2.jpg" alt="">
+        <div class="overlay">
+            <h2>Concert Option 2</h2>
+            <button class="preview-btn">▶ Preview Song</button>
+        </div>
+    </div>
 
-    <img src="assets/images/Snow_Patrol_1_1.jpg" alt="">
-    <div class="overlay"><h2>Concert Option 1</h2></div>
-</div>
-
-<div class="option concert-option"
-     data-name="Concert Option 2"
-     data-audio="assets/audio/mp3_1_2.mp3">
-
-    <img src="assets/images/Europe_1_2.jpg" alt="">
-    <div class="overlay"><h2>Concert Option 2</h2></div>
-</div>
-
-<div class="option concert-option"
-     data-name="Concert Option 3"
-     data-audio="assets/audio/mp3_1_3.mp3">
-
-    <img src="assets/images/Cure_1_3.jpg" alt="">
-    <div class="overlay"><h2>Concert Option 3</h2></div>
-</div>
-```
-
+    <div class="option concert-option" data-name="Concert Option 3" data-audio="assets/audio/pictures_1_3.mp3">
+        <img src="assets/images/Cure_1_3.jpg" alt="">
+        <div class="overlay">
+            <h2>Concert Option 3</h2>
+            <button class="preview-btn">▶ Preview Song</button>
+        </div>
+    </div>
 </section>
 
 <!-- PAGE 2 -->
@@ -254,7 +273,7 @@ button{
 
 <div class="option dinner-option"
      data-name="Dinner Option 2"
-     data-audio="assets/audio/mp3_2_2.mp3">
+     data-audio="assets/audio/finalcountdown_1_2.mp3">
 
     <img src="assets/images/img_2_2.jpg" alt="">
     <div class="overlay"><h2>Dinner Option 2</h2></div>
@@ -262,7 +281,7 @@ button{
 
 <div class="option dinner-option"
      data-name="Dinner Option 3"
-     data-audio="assets/audio/mp3_2_3.mp3">
+     data-audio="assets/audio/pictures_1_3.mp3">
 
     <img src="assets/images/img_2_3.jpg" alt="">
     <div class="overlay"><h2>Dinner Option 3</h2></div>
@@ -402,22 +421,38 @@ function playAudio(path){
     player.play().catch(()=>{});
 }
 
-document.querySelectorAll(".concert-option").forEach(option=>{
+document.querySelectorAll(".concert-option").forEach(option => {
+    const previewBtn = option.querySelector(".preview-btn");
+    const audioPath = option.dataset.audio;
 
-    option.addEventListener("click",()=>{
+    // 1. Handle the Preview Button Click
+    previewBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // 👈 Stops the page from switching!
 
-        playAudio(option.dataset.audio);
-
-        selectedConcert = option.dataset.name;
-
-        document.getElementById("concertChoice").textContent =
-            selectedConcert;
-
-        setTimeout(()=>{
-            showPage("dinnerPage");
-        },500);
+        // If this exact song is already playing, pause it
+        if (player.src.includes(audioPath) && !player.paused) {
+            player.pause();
+            previewBtn.textContent = "▶ Preview Song";
+        } else {
+            // Otherwise, play this song and update button text
+            document.querySelectorAll(".preview-btn").forEach(btn => btn.textContent = "▶ Preview Song");
+            playAudio(audioPath);
+            previewBtn.textContent = "⏸ Pause Preview";
+        }
     });
 
+    // 2. Handle Selecting the Entire Card (Moves to Dinner Page)
+    option.addEventListener("click", () => {
+        selectedConcert = option.dataset.name;
+        document.getElementById("concertChoice").textContent = selectedConcert;
+
+        // Keep the selected audio playing into the next scenes if you want!
+        playAudio(audioPath); 
+
+        setTimeout(() => {
+            showPage("dinnerPage");
+        }, 500);
+    });
 });
 
 document.querySelectorAll(".dinner-option").forEach(option=>{
