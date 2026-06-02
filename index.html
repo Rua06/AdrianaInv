@@ -37,17 +37,15 @@ html,body{
     transform:translateX(100%);
 }
 
-.page-title{
-    position:absolute;
-    top:15px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:10;
-    background:rgba(0,0,0,.6);
-    padding:10px 18px;
-    border-radius:999px;
-    backdrop-filter:blur(10px);
-    font-weight:600;
+.page-title {
+    width: 100%;
+    text-align: center;
+    background: #000; /* Solid black background so images can't bleed under it */
+    padding: 16px 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #1DB954; /* Add a subtle Spotify green dividing line */
+    z-index: 10;
 }
 
 /* 1. Shared styles for all options (No heights here!) */
@@ -58,21 +56,23 @@ html,body{
     overflow: hidden;
 }
 
-/* 2. Layout for the page wrappers */
 #concertPage, #dinnerPage {
     display: flex;
     flex-direction: column;
     height: 100vh; 
+    overflow: hidden;
 }
 
-/* 3. Specific height for Concert options (4 items = 25%) */
+/* Let the browser auto-calculate the card sizes to perfectly fill 
+   whatever space is left over below the title banner! */
 #concertPage .option {
-    height: 25%;
+    flex: 1;
+    min-height: 0; /* Prevents text from bloating the box on tiny screens */
 }
 
-/* 4. Specific height for Dinner options (3 items = 33.333%) */
 #dinnerPage .option {
-    height: 33.333%;
+    flex: 1;
+    min-height: 0;
 }
 
 .option img{
