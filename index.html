@@ -50,12 +50,29 @@ html,body{
     font-weight:600;
 }
 
-.option{
-    position:relative;
-    height:33.333%;
-    width:100%;
-    cursor:pointer;
-    overflow:hidden;
+/* 1. Shared styles for all options (No heights here!) */
+.option {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* 2. Layout for the page wrappers */
+#concertPage, #dinnerPage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+}
+
+/* 3. Specific height for Concert options (4 items = 25%) */
+#concertPage .option {
+    height: 25%;
+}
+
+/* 4. Specific height for Dinner options (3 items = 33.333%) */
+#dinnerPage .option {
+    height: 33.333%;
 }
 
 .option img{
@@ -219,6 +236,29 @@ button{
 .overlay {
     flex-direction: column;
 }
+
+.back-btn {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 14px;
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateX(-3px); /* Subtle nudge to the left */
+}
 </style>
 
 </head>
@@ -229,28 +269,36 @@ button{
 <!-- PAGE 1 -->
 
 <section id="concertPage" class="page">
-    <div class="page-title">Choose Our Concert 🎤</div>
+    <div class="page-title">Queres ter um date comigo? Escolhe uma opcão 🎤</div>
 
-    <div class="option concert-option" data-name="Concert Option 1" data-audio="assets/audio/openyoureyes_1_1.mp3">
+    <div class="option concert-option" data-name="Dia 5 Snow Patrol" data-audio="assets/audio/openyoureyesshort_1_1.mp3">
         <img src="assets/images/Snow_Patrol_1_1.jpg" alt="">
         <div class="overlay">
-            <h2>Concert Option 1</h2>
+            <h2>Dia 5 Snow Patrol</h2>
             <button class="preview-btn">▶ Preview Song</button>
         </div>
     </div>
 
-    <div class="option concert-option" data-name="Concert Option 2" data-audio="assets/audio/finalcountdown_1_2.mp3">
+    <div class="option concert-option" data-name="Dia 6 Europe" data-audio="assets/audio/finalcountdown_1_2.mp3">
         <img src="assets/images/Europe_1_2.jpg" alt="">
         <div class="overlay">
-            <h2>Concert Option 2</h2>
+            <h2>Dia 6 Europe</h2>
             <button class="preview-btn">▶ Preview Song</button>
         </div>
     </div>
 
-    <div class="option concert-option" data-name="Concert Option 3" data-audio="assets/audio/pictures_1_3.mp3">
+    <div class="option concert-option" data-name="Dia 7 The Cure" data-audio="assets/audio/pictures_1_3.mp3">
         <img src="assets/images/Cure_1_3.jpg" alt="">
         <div class="overlay">
-            <h2>Concert Option 3</h2>
+            <h2>Dia 7 The Cure</h2>
+            <button class="preview-btn">▶ Preview Song</button>
+        </div>
+    </div>
+
+    <div class="option concert-option" data-name="Dia 5 ou 6 Baixa como Turista" data-audio="assets/audio/porto.mp3">
+        <img src="assets/images/nata.jpg" alt="">
+        <div class="overlay">
+            <h2>Dia 5 ou 6 Baixa como Turista</h2> <!-- Fixed quote here -->
             <button class="preview-btn">▶ Preview Song</button>
         </div>
     </div>
@@ -259,32 +307,34 @@ button{
 <!-- PAGE 2 -->
 
 <section id="dinnerPage" class="page hidden">
+    <button class="back-btn" onclick="showPage('concertPage')">← Back</button>
+    
 
 ```
 <div class="page-title">Choose Dinner 🍽️</div>
 
 <div class="option dinner-option"
-     data-name="Dinner Option 1"
-     data-audio="assets/audio/openyoureyes_1_1.mp3">
+     data-name="Sushi"
+     data-audio="assets/audio/openyoureyesshort_1_1.mp3">
 
-    <img src="assets/images/img_2_1.jpg" alt="">
-    <div class="overlay"><h2>Dinner Option 1</h2></div>
+    <img src="assets/images/sushi_2_1.jpg" alt="">
+    <div class="overlay"><h2>Sushi</h2></div>
 </div>
 
 <div class="option dinner-option"
-     data-name="Dinner Option 2"
+     data-name="Burguers"
      data-audio="assets/audio/finalcountdown_1_2.mp3">
 
-    <img src="assets/images/img_2_2.jpg" alt="">
-    <div class="overlay"><h2>Dinner Option 2</h2></div>
+    <img src="assets/images/burguer_2_2.jpeg" alt="">
+    <div class="overlay"><h2>Burguers</h2></div>
 </div>
 
 <div class="option dinner-option"
-     data-name="Dinner Option 3"
+     data-name="Arroz de Pato"
      data-audio="assets/audio/pictures_1_3.mp3">
 
-    <img src="assets/images/img_2_3.jpg" alt="">
-    <div class="overlay"><h2>Dinner Option 3</h2></div>
+    <img src="assets/images/arroz_pato_2_3.jpg" alt="">
+    <div class="overlay"><h2>Arroz de Pato</h2></div>
 </div>
 ```
 
@@ -293,6 +343,7 @@ button{
 <!-- PAGE 3 -->
 
 <section id="ticketPage" class="page hidden">
+    <button class="back-btn" onclick="showPage('dinnerPage')">← Back</button>
 
 ```
 <div class="ticket">
@@ -312,12 +363,21 @@ button{
         <br>
 
         <p><strong>Reserved Seat:</strong></p>
-        <p>Next To Me ❤️</p>
+        <p>Next To Me &#128579;</p>
+
+        <br>
+
+        <p><strong>Price:</strong></p>
+        <p>To discuss  🤔</p>
+
+        <p><strong>Concert Visibility:</strong></p>
+        <p>Extremely Reduced, Mostly just hearing 😅  </p>
+
 
         <div class="button-group">
 
             <button class="primary" id="acceptBtn">
-                YES, I'M IN ❤️
+                YES, I'M IN 🍺
             </button>
 
             <button class="secondary" id="convinceBtn">
@@ -340,7 +400,7 @@ button{
 ```
 <div class="convince-card">
 
-    <img src="assets/images/img_3_1.jpg" alt="">
+    <img src="assets/images/impossible.jpg" alt="">
 
     <div class="convince-content">
 
@@ -352,7 +412,7 @@ button{
         </p>
 
         <p>
-            ✓ Concerts are fun<br>
+            ✓ Concerts/Dates are fun<br>
             ✓ Food is fun<br>
             ✓ Spending time together is fun
         </p>
@@ -387,8 +447,9 @@ button{
     </p>
 
     <p>
-        Now all that's left is creating
-        a memorable night together ❤️
+        Se chegaste até aqui, envia-me uma mensagem com o que selecionaste. 
+        Não cheguei a programar a task que iria recolher a informação 😅. <br>
+        Vou buscar-te a tua casa e deixo-te lá. Não é negociável
     </p>
 
 </div>
@@ -493,7 +554,7 @@ document
 .getElementById("fineBtn")
 .addEventListener("click",()=>{
 
-    showPage("acceptedPage");
+    showPage("ticketPage");
 
 });
 
